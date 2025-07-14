@@ -3,29 +3,51 @@
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Scrollama: Basic Example</title>
-    <meta name="description" content="Scrollama: Basic Example" />
+    <title>Scrollama: Sticky Overlay Example</title>
+    <meta name="description" content="Scrollama: Sticky Overlay Example" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="style.css" />
+    <link href="https://api.mapbox.com/mapbox-gl-js/v3.13.0/mapbox-gl.css" rel="stylesheet">
+    <script src="https://api.mapbox.com/mapbox-gl-js/v3.13.0/mapbox-gl.js"></script>
+    <script src="https://unpkg.com/@turf/turf@6.5.0/turf.min.js"></script>
+    <script src="https://unpkg.com/intersection-observer@0.5.1/intersection-observer.js"></script>
+    <script src="https://unpkg.com/scrollama"></script>
     <style>
+      body { margin: 0; padding: 0; font-family: sans-serif; }
+      #map { position: absolute; top: 0; bottom: 0; width: 100%; height: 100%; }
+
       #scrolly {
         position: relative;
+        background-color: #f3f3f3;
+        padding: 1rem;
+      }
+
+      .sticky-thing {
+        position: -webkit-sticky;
+        position: sticky;
+        top: 12.5vh;
+        height: 75vh;
+        width: 100%;
+        z-index: 1;
       }
 
       article {
         position: relative;
-        padding: 0 1rem;
+        max-width: 100%;
         margin: 0 auto;
-        width: 33%;
       }
 
       .step {
-        margin: 2rem auto 4rem auto;
-        background-color: #3b3b3b;
-        color: #fff;
+        margin: 0 auto 2rem auto;
+        padding: 8rem 1rem;
+        background-color: rgba(0, 0, 0, 0.1);
       }
 
-      .step.is-active {
+      .step:last-child {
+        margin-bottom: 0;
+      }
+
+      .step.is-active p {
         background-color: goldenrod;
         color: #3b3b3b;
       }
@@ -34,29 +56,171 @@
         text-align: center;
         padding: 1rem;
         font-size: 1.5rem;
+        background-color: #3b3b3b;
+        color: white;
       }
+
+      .step img {
+        width: 100%;
+        max-width: 1000px;
+        display: block;
+        margin: 0 auto;
+      }
+
+      .img-container {
+        display: flex;
+        justify-content: center;
+
+      }
+      .chart-step {
+        position: relative;
+        z-index: 10;
+      }
+
     </style>
   </head>
 
   <body>
-    
     <main>
-      <nav>
-        <a href="https://github.com/russellgoldenberg/scrollama">scrollama.js</a>
-        <div class="nav__examples">
-          <p>Examples:</p>
-          <a href="basic.html">Basic</a>
-          <a href="progress.html">Progress</a>
-          <a href="sticky-side.html">Sticky Side</a>
-          <a href="sticky-overlay.html">Sticky Overlay</a>
-        </div>
-      </nav>
       <section id="intro">
-        <h1 class="intro__hed">Stripped-down Scrollama.js examples</h1>
+        <h1 class="intro__hed"> Dogs vs Babies: Who uses Atlanta's Westside Beltline More?</h1>
+        <p class="intro__dek">
+          There are so many dogs in Atlanta! On my daily walks, which often take me to various neighborhoods in the city (don’t get me started on Atlanta’s walkability challenges), I’ve noticed one thing consistently: the dogs are always out. So, for fun, I decided to conduct a very unscientific experiment. For five days, I narrowed my walks to the Westside BeltLine and set out to count the number of dogs versus babies I spotted. This wasn’t a rigorous study by any means, but a playful attempt to quantify a hunch I’ve had for a while.
+        </p>
       </section>
+
+      <section id="scrolly">
+        <div class="sticky-thing">
+          <div id="map"></div>
+        </div>
+
+        <article><article>
+  <div class="step" data-step="1">
+    <p>Add map.</p>
+  </div>
+  <div class="step" data-step="2">
+    <p>Add purple line.</p>
+  </div>
+  <div class="step" data-step="3">
+    <p>Add red line.</p>
+  </div>
+  <div class="step chart-step" data-step="4">
+    <p>Add line chart.</p>
+    <div class="img-container">
+      <img src="BBvSp-dogs-vs-babies (1).png" alt="Line chart">
+    </div>
+  </div>
+  <div class="step" data-step="5">
+    <p>Add children markers</p>
+  </div>
+</article>
+
+        </article>
+      </section>
+
+      <section id="outro"></section>
     </main>
 
-    <script src="https://unpkg.com/intersection-observer"></script>
-    <script src="https://unpkg.com/scrollama"></script>
+    <script>
+      mapboxgl.accessToken = 'pk.eyJ1IjoibmNob2xseXAiLCJhIjoiY21iemxtZmZ4MW4wczJtb3N6bGM2aXdpMSJ9.U1866oZmCpSobv1RQkmhgQ';
+      const map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/nchollyp/cmcutc5hs00v501qv8qss7gs3',
+        center: [-84.424449, 33.735427],
+        zoom: 12.84
+      });
+
+      map.scrollZoom.disable();
+
+      map.on('load', () => {
+        map.setLayoutProperty('Westside Beltline', 'visibility', 'none');
+        map.setLayoutProperty('Walking Path', 'visibility', 'none');
+
+        fetch('data/blockgroup.geojson')
+          .then(res => res.json())
+          .then(polygonData => {
+            map.addSource('blockgroup', {
+              type: 'geojson',
+              data: polygonData
+            });
+
+            map.addLayer({
+              id: 'blockgroup-layer',
+              type: 'fill',
+              source: 'blockgroup',
+              paint: {
+                'fill-color': '#ff69b4',
+                'fill-opacity': 0.3,
+                'fill-outline-color': '#000'
+              }
+            });
+
+            const candidates = turf.randomPoint(300, { bbox: turf.bbox(polygonData) });
+            const inside = candidates.features.filter(pt =>
+              turf.booleanPointInPolygon(pt, polygonData.features[0])
+            ).slice(0, 150);
+
+            const babyMarkers = {
+              type: "FeatureCollection",
+              features: inside
+            };
+
+            map.addSource('babies', {
+              type: 'geojson',
+              data: babyMarkers
+            });
+
+            map.addLayer({
+              id: 'babies-layer',
+              type: 'circle',
+              source: 'babies',
+              layout: { visibility: 'none' },
+              paint: {
+                'circle-radius': 4,
+                'circle-color': '#FFD700',
+                'circle-stroke-width': 1,
+                'circle-stroke-color': '#000'
+              }
+            });
+          });
+      });
+
+      const scroller = scrollama();
+
+      function handleStepEnter(response) {
+        const steps = document.querySelectorAll('.step');
+        steps.forEach(step => step.classList.remove('is-active'));
+        response.element.classList.add('is-active');
+
+        if (response.index === 1) {
+          map.setLayoutProperty('Westside Beltline', 'visibility', 'visible');
+        }
+
+        if (response.index === 2) {
+          map.setLayoutProperty('Walking Path', 'visibility', 'visible');
+        }
+
+        if (response.index === 4) {
+          map.setLayoutProperty('babies-layer', 'visibility', 'visible');
+        } else {
+          map.setLayoutProperty('babies-layer', 'visibility', 'none');
+        }
+      }
+
+      function init() {
+        scroller
+          .setup({
+            step: "#scrolly article .step",
+            offset: 0.33,
+            debug: false
+          })
+          .onStepEnter(handleStepEnter);
+
+        window.addEventListener("resize", scroller.resize);
+      }
+
+      init();
+    </script>
   </body>
 </html>
+
