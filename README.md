@@ -1,6 +1,6 @@
-# Dogs vs. Babies: Who Uses the Westside Trail More? :smile:
+# Dogs vs. Babies: Who Uses the Westside Trail More? 
 
-This was my first completed project for the Lede Program at Columbia School of Journalism. On the Westside Trail in Atlanta’s West End neighborhood, I’ve observed alot of dogs and babies, and thought it might be interesting to track my observations and compare them to any available data. 
+For my first completed project during the Lede Program at Columbia Graduate School of Journalism, I decided to conduct a fun experiment using personal and public data. On the Westside Trail in Atlanta’s West End neighborhood, I’ve observed alot of dogs and babies, and thought it might be interesting to track my observations and compare them to any available data. 
 
 First, I determined a regular walking path, and mapped its coordinates along with that of the broader Westside Trail just to visualize them both against the backdrop of a neighborhood map. 
 
