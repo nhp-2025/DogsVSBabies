@@ -6,102 +6,11 @@
     <title>Dogs vs. Babies: Who Uses Atlanta's Westside Trail More?</title>
     <meta name="description" content="Scrollama: Sticky Overlay Example" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="style.css" />
-    <link href="https://api.mapbox.com/mapbox-gl-js/v3.13.0/mapbox-gl.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <script src="https://api.mapbox.com/mapbox-gl-js/v3.13.0/mapbox-gl.js"></script>
-    <script src="https://unpkg.com/@turf/turf@6.5.0/turf.min.js"></script>
-    <script src="https://unpkg.com/intersection-observer@0.5.1/intersection-observer.js"></script>
-    <script src="https://unpkg.com/scrollama"></script>
-    <style>
-      body { margin: 0; padding: 0; font-family: sans-serif; }
-      #map { position: absolute; top: 0; bottom: 0; width: 100%; height: 100%; }
-
-      #scrolly {
-        position: relative;
-        background-color: #f3f3f3;
-        padding: 1rem;
-      }
-
-      .final {
-        margin-bottom: 10rem !important;
-        opacity: 0;
-      }
-
-      .sticky-thing {
-        position: -webkit-sticky;
-        position: sticky;
-        top: 12.5vh;
-        height: 75vh;
-        width: 100%;
-        z-index: 1;
-      }
-
-      article {
-        position: relative;
-        max-width: 100%;
-        margin: 0 auto;
-      }
-
-      .step {
-        margin: 0 auto 10rem auto;
-        padding: 8rem 1rem;
-        background-color: rgba(0, 0, 0, 0.1);
-        position: relative;
-        z-index: 10;
-      }
-
-.step[data-step="2"] {
-  opacity: 0;
-  height: 100px; /* still needs height to trigger scroll */
-  pointer-events: none;
-}
-
-      .step:last-child {
-        margin-bottom: 0;
-      }
-
-      .step.is-active p {
-        background-color: goldenrod;
-        color: #3b3b3b;
-      }
-
-      .step p {
-        text-align: center;
-        padding: 1rem;
-        font-size: 1.5rem;
-        background-color: #3b3b3b;
-        color: white;
-      }
-
-      .step img {
-        width: 100%;
-        max-width: 1000px;
-        display: block;
-        margin: 0 auto;
-      }
-
-      .img-container {
-        display: flex;
-        justify-content: center;
-
-      }
-      .chart-step {
-        position: relative;
-        z-index: 10;
-      }
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Dogs vs. Babies: Who Uses Atlanta's Westside Trail More?</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <link rel="stylesheet" href="style.css" />
     <link href="https://api.mapbox.com/mapbox-gl-js/v3.13.0/mapbox-gl.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" />
-    
+
     <script src="https://api.mapbox.com/mapbox-gl-js/v3.13.0/mapbox-gl.js"></script>
     <script src="https://unpkg.com/@turf/turf@6.5.0/turf.min.js"></script>
     <script src="https://unpkg.com/intersection-observer@0.5.1/intersection-observer.js"></script>
@@ -164,7 +73,7 @@
       .step {
         margin: 0 auto 10rem auto;
         padding: 8rem 1rem;
-        background-color: rgba(0, 0, 0, 0.1);
+        background-color: rgba(0, 0, 0, 0.05);
         position: relative;
         z-index: 10;
       }
@@ -187,6 +96,8 @@
       .step p {
         background-color: transparent;
         color: #000;
+        text-align: left;
+        font-size: 1.1rem;
       }
 
       .step img {
@@ -255,7 +166,14 @@
 
         <article>
           <div class="step" data-step="1">
-            <p>The Atlanta BeltLine is a 22-mile walking, cycling, and scooting path that winds through the city and connects 45 neighborhoods. As one of the city’s largest redevelopment projects, it has improved walkability, expanded green space, boosted economic development, and promoted arts and culture. The Westside Trail is a three-mile segment of the larger BeltLine, located in southwest Atlanta. It serves as a safe, pedestrian-friendly corridor linking several historic neighborhoods and providing access to parks, small businesses, and MARTA, the city’s public transit system. Built through a residential area, this stretch connects the neighborhoods of Adair Park, Westview, Capital View, Oakland City, and the West End—home to the Atlanta University Center and its historically Black colleges and universities: Spelman, Morehouse, and Clark Atlanta.</p>
+            <p>
+              The Atlanta BeltLine is a 22-mile walking, cycling, and scooting path that winds through the city and connects 45 neighborhoods.
+              As one of the city’s largest redevelopment projects, it has improved walkability, expanded green space, boosted economic development, and promoted arts and culture.
+              The Westside Trail is a three-mile segment of the larger BeltLine, located in southwest Atlanta. It serves as a safe, pedestrian-friendly corridor linking several historic neighborhoods
+              and providing access to parks, small businesses, and MARTA, the city’s public transit system.
+              Built through a residential area, this stretch connects the neighborhoods of Adair Park, Westview, Capital View, Oakland City, and the West End—home to the Atlanta University Center
+              and its historically Black colleges and universities: Spelman, Morehouse, and Clark Atlanta.
+            </p>
           </div>
 
           <div class="step" data-step="2">
@@ -263,12 +181,14 @@
           </div>
 
           <div class="step" data-step="3">
-            <p>For five days, I narrowed my walks on the Westside Trail (purple) to the same walking path (red) and set out to count the number of dogs versus babies I spotted.</p>
+            <p>
+              For five days, I narrowed my walks on the Westside Trail (purple) to the same walking path (red) and set out to count the number of dogs versus babies I spotted.
+            </p>
           </div>
 
           <div class="step chart-step" data-step="4">
             <div class="img-container">
-              <img src="BBvSp-dogs-vs-babies (1).png" alt="Line chart">
+              <img src="BBvSp-dogs-vs-babies (1).png" alt="Line chart" />
             </div>
           </div>
 
@@ -284,11 +204,12 @@
         </p>
 
         <p>
-          Though I wasn't able to find data on the local dog population, the U.S. Census does offer human population estimates for Block Group 1, Census Tract 62, in Fulton County, Georgia — an area that includes my walking path. And while the category closest to "babies" is "Under 5 years old,” ask any 4-year-old, and they’ll tell you they’re definitely not babies.
+          Though I wasn't able to find data on the local dog population, the U.S. Census does offer human population estimates for Block Group 1, Census Tract 62, in Fulton County, Georgia —
+          an area that includes my walking path. And while the category closest to "babies" is "Under 5 years old,” ask any 4-year-old, and they’ll tell you they’re definitely not babies.
         </p>
 
         <p>
-          It’s a broad category, admittedly, but for this quick and playful project, it’s what I had—and what I went with. If I were to expand this in the future, I’d love to include local pet registry data and 'feels like' weather data.
+          It’s a broad category, admittedly, but for this quick and playful project, it’s what I had—and what I went with. If I were to expand this in the future, I’d love to include local pet registry data and "feels like" weather data.
         </p>
 
         <p>
